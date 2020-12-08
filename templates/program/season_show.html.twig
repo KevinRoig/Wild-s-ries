@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block title %}Season #{{ seasonId }}{% endblock %}
+
+{% block body %}
+  <div>
+    <h1>{{ season.program.title }}</h1>
+  </div>
+  <div>
+   Year : {{season.year}}
+  </div>
+  <div>
+    <h3>My 2 cents: {{ season.description }}</h3>
+  </div>
+<div>
+  {% for episode in season.episodes %}
+    <div>Title : {{ episode.title }}</div>
+    <div>Episode number : {{ episode.number }}</div>
+    <div>Synopsis : {{ episode.synopsis}}</div>
+  {% endfor %}
+</div>
+<a href="{{ path('program_index') }}">
+    Retour à la liste des programmes
+</a>
+
+{% endblock %}

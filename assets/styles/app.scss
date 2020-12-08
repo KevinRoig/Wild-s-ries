@@ -3,12 +3,12 @@
 @import "~bootstrap/scss/bootstrap";
 
 $theme-colors: (
-  "primary": #0074d9,
+  "primary": #32ffff,
   "danger": #ff4136,
   );
 
 .body {
-    background-color: blue;
+    background-color: rgb(255, 149, 149);
 }
 
 .navbar {
