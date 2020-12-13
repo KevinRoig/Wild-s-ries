@@ -11,8 +11,11 @@ use App\Entity\Program;
 use App\Repository\SeasonRepository;
 use App\Entity\Season;
 use app\entity\Episode;
+use App\Form\ProgramType;
 use App\Repository\EpisodeRepository;
 use PhpMyAdmin\Plugins\Schema\Eps\Eps;
+use PhpMyAdmin\Tests\Stubs\Response as StubsResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/programs", name="program_")
@@ -35,6 +38,29 @@ class ProgramController extends AbstractController
         return $this->render('program/index.html.twig', [
             'programs' => $programs
         ]);
+    }
+
+
+    /**
+     * The controller for the program add form
+     * @Route("/new", name="new")
+     * @return Response 
+     */
+    public function new(Request $request): Response
+    {
+        $program = new Program();
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($program);
+            $entityManager->flush();
+            return $this->redirectToRoute('program_index');
+      }
+      return $this->render('program/new.html.twig', [
+          "form" => $form->createView(),
+      ]);
+
     }
 
     /**

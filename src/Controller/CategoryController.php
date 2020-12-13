@@ -9,6 +9,8 @@ use App\Entity\Category;
 use App\Repository\CategoryRepository;
 use App\Repository\ProgramRepository;
 use Symfony\Component\VarDumper\VarDumper;
+use App\Form\CategoryType;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/categories", name="category_")
@@ -31,6 +33,26 @@ class CategoryController extends AbstractController
         ]);
      }
 
+        /**
+       * The controller for the category add form
+       * @Route("/new", name="new")
+       */
+      public function new(Request $request): Response
+      {
+          $category = new Category();
+          $form = $this->createForm(CategoryType::class, $category);
+          $form->handleRequest($request);
+          if ($form->isSubmitted()){
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($category);
+                $entityManager->flush();
+                return $this->redirectToRoute('category_index');
+          }
+          return $this->render('category/new.html.twig', [
+              "form" => $form->createView(),
+          ]);
+      }
+
      /**
       * @Route("/{categoryName}", name="show")
       * @return Reponse
@@ -49,4 +71,6 @@ class CategoryController extends AbstractController
                 'programs' => $programs
             ]);
       }
+
+
 }
