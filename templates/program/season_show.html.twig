@@ -13,10 +13,15 @@
   </div>
 <div>
   {% for episode in season.episodes %}
-    <div>Title : {{ episode.title }}</div>
+    <a href="{{path('program_episode_show', {programId: programId, seasonId:season.id, episodeId: episode.id}) }}"><div>Title : {{ episode.title }}</div></a> 
     <div>Episode number : {{ episode.number }}</div>
     <div>Synopsis : {{ episode.synopsis}}</div>
+
+    <br><br>
   {% endfor %}
+  <div>
+    <a href="{{ path("program_show", { id: programId }) }}">Retour à la série</a>
+  </div>
 </div>
 <a href="{{ path('program_index') }}">
     Retour à la liste des programmes

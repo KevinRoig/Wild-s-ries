@@ -2,6 +2,7 @@
 // src/Controller/ProgramController.php
 namespace App\Controller;
 
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,6 +11,8 @@ use App\Entity\Program;
 use App\Repository\SeasonRepository;
 use App\Entity\Season;
 use app\entity\Episode;
+use App\Repository\EpisodeRepository;
+use PhpMyAdmin\Plugins\Schema\Eps\Eps;
 
 /**
  * @Route("/programs", name="program_")
@@ -36,21 +39,11 @@ class ProgramController extends AbstractController
 
     /**
      * Getting a program by id
-     * @Route("/show/{id<^[0-9]+$>}", name="show")
+     * @Route("/show/{id}", name="show")
      * @return Response
      */
-    public function show(int $id): Response
-    {
-        $program = $this->getDoctrine()
-        ->getRepository(Program::class)
-        ->findOneBy(['id' => $id]);
-        
-        if(!$program) {
-            throw $this->createNotFoundException(
-                'No program with id : ' .$id . 'found in program\'s table.'
-            );
-        }
-        
+    public function show(Program $program): Response
+    {    
         return $this->render('program/show.html.twig', [
                 'program' => $program
             ]);
@@ -62,10 +55,27 @@ class ProgramController extends AbstractController
      */
     public function showSeason(int $programId, int $seasonId, SeasonRepository $seasonRepository): Response
     {
-        $seasonInfos = $seasonRepository->find(['id' => $seasonId]);
+        $seasonInfos = $seasonRepository->findOneBy(['id' => $seasonId]);
         return $this->render('program/season_show.html.twig', [
             'programId' => $programId,
             'seasonId' => $seasonId,
+            'season' => $seasonInfos,
+        ]);
+    }
+
+    /**
+     * Show episode 
+     * @Route("/{programId}/season/{seasonId}/episode/{episodeId}", name="episode_show")
+     */
+    public function showEpisode(int $programId, int $seasonId, int $episodeId, SeasonRepository $seasonRepository, EpisodeRepository $episodeRepository): Response
+    {
+  
+        $seasonInfos = $seasonRepository->find(['id' => $seasonId]);
+        $episodeInfos = $episodeRepository->find(['id' => $episodeId]);
+        return $this->render('program/episode_show.html.twig', [
+            'programId' => $programId,
+            'seasonId' => $seasonId,
+            'episode' => $episodeInfos,
             'season' => $seasonInfos
         ]);
     }
