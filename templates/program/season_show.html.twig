@@ -1,26 +1,26 @@
 {% extends 'base.html.twig' %}
-{% block title %}Season #{{ seasonId }}{% endblock %}
+{% block title %}Season #{{ program.id }}{% endblock %}
 
 {% block body %}
   <div>
-    <h1>{{ season.program.title }}</h1>
+    <h1>{{ program.title }}</h1>
   </div>
   <div>
-   Year : {{season.year}}
+   Year : {{ season.year }}
   </div>
   <div>
     <h3>My 2 cents: {{ season.description }}</h3>
   </div>
 <div>
   {% for episode in season.episodes %}
-    <a href="{{path('program_episode_show', {programId: programId, seasonId:season.id, episodeId: episode.id}) }}"><div>Title : {{ episode.title }}</div></a> 
+    <a href="{{path('program_episode_show', {program: program.id, season:season.number, episode: episode.id}) }}"><div>Title : {{ episode.title }}</div></a> 
     <div>Episode number : {{ episode.number }}</div>
     <div>Synopsis : {{ episode.synopsis}}</div>
 
     <br><br>
   {% endfor %}
   <div>
-    <a href="{{ path("program_show", { id: programId }) }}">Retour à la série</a>
+    <a href="{{ path("program_show", { id: program.id }) }}">Retour à la série</a>
   </div>
 </div>
 <a href="{{ path('program_index') }}">

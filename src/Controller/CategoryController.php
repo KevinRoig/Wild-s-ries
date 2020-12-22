@@ -22,12 +22,8 @@ class CategoryController extends AbstractController
     * @Route("/", name="index")
     *@return Reponse
     */
-     public function index() 
+     public function index(Category $category) 
      {
-        $category = $this->getDoctrine()
-        ->getRepository(Category::class)
-        ->findAll();
-
         return $this->render('category/index.html.twig', [
             'category' => $category
         ]);
