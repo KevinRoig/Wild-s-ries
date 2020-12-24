@@ -9,3 +9,6 @@ https://drive.google.com/file/d/1NVjXnU6YYnForC9KteBFVbuj7QMeCntn/view
 
 Vidéo de la réponse de la quête 12:
 https://drive.google.com/file/d/19Ayaw4wlLPQ40cumeVlGt8eFZXGNU-uO/view
+
+Vidéo de la réponse de la quête 13:
+https://drive.google.com/file/d/1CM4vo12Anq1y6VPPCr0SfGNhXOzMkUBb/view

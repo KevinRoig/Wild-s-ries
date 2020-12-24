@@ -22,10 +22,10 @@ class CategoryController extends AbstractController
     * @Route("/", name="index")
     *@return Reponse
     */
-     public function index(Category $category) 
+     public function index(CategoryRepository $category) 
      {
         return $this->render('category/index.html.twig', [
-            'category' => $category
+            'category' => $category->findAll()
         ]);
      }
 

@@ -10,6 +10,9 @@ use App\Entity\Program;
 use App\Entity\Season;
 use App\Entity\Episode;
 use App\Form\ProgramType;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -41,13 +44,12 @@ class ProgramController extends AbstractController
      * @Route("/new", name="new")
      * @return Response 
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
-        if ($form->isSubmitted()){
-            $entityManager = $this->getDoctrine()->getManager();
+        if ($form->isSubmitted() && $form->isValid()){
             $entityManager->persist($program);
             $entityManager->flush();
             return $this->redirectToRoute('program_index');
