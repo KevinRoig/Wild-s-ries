@@ -15,3 +15,6 @@ https://drive.google.com/file/d/1CM4vo12Anq1y6VPPCr0SfGNhXOzMkUBb/view
 
 Vidéo de la réponse de la quête 14:
 https://drive.google.com/file/d/1CdGUQXNbIDQCtW3b-_GztIo3ofKMiSBq/view
+
+Vidéo de la réponse de la quête 15:
+https://drive.google.com/file/d/13woP3tjPDpnnOKKLv2Yf4mELJ3sBhxrC/view

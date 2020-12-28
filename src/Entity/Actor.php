@@ -26,7 +26,8 @@ class Actor
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Program::class, inversedBy="actors")
+     * @ORM\ManyToMany(targetEntity=Program::class, inversedBy="actors", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="actor_program")
      */
     private $programs;
 
@@ -64,6 +65,7 @@ class Actor
     {
         if (!$this->programs->contains($program)) {
             $this->programs[] = $program;
+            $program->addActor($this);
         }
 
         return $this;
@@ -72,6 +74,7 @@ class Actor
     public function removeProgram(Program $program): self
     {
         $this->programs->removeElement($program);
+        $program->removeActor($this);
 
         return $this;
     }
