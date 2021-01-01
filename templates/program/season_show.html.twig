@@ -13,7 +13,7 @@
   </div>
 <div>
   {% for episode in season.episodes %}
-    <a href="{{path('program_episode_show', {program: program.id, season:season.number, episode: episode.id}) }}"><div>Title : {{ episode.title }}</div></a> 
+    <a href="{{path('program_episode_show', {program: program.id, season:season.id, episode: episode.id}) }}"><div>Title : {{ episode.title }}</div></a> 
     <div>Episode number : {{ episode.number }}</div>
     <div>Synopsis : {{ episode.synopsis}}</div>
 

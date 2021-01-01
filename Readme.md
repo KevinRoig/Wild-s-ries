@@ -18,3 +18,6 @@ https://drive.google.com/file/d/1CdGUQXNbIDQCtW3b-_GztIo3ofKMiSBq/view
 
 Vidéo de la réponse de la quête 15:
 https://drive.google.com/file/d/13woP3tjPDpnnOKKLv2Yf4mELJ3sBhxrC/view
+
+Vidéo de la réponse de la quête 16: 
+https://drive.google.com/file/d/1p-9HpAPMIAKSCmw70EJIUkGarifffNPD/view
