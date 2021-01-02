@@ -74,7 +74,7 @@ public function load(ObjectManager $manager)
         $program->setCategory($this->getReference('category_' .$faker->numberBetween($min=0, $max=5)));
         $program->setPoster($faker->imageUrl($width = 640, $height = 480));
         $manager->persist($program);
-        $this->setReference('prog_'. $title, $program);
+        $this->setReference('prog_'. $i, $program);
         $i++;
     }
     $manager->flush();
