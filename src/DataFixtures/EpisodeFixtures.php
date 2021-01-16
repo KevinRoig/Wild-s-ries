@@ -9,20 +9,30 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Faker;
+use App\Services\Slugify;
 
 class EpisodeFixtures extends Fixture implements DependentFixtureInterface
 {
+private $slugify;
+
+public function __construct(Slugify $slugify)
+{
+    $this->slugify = $slugify;
+}
+
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create('en_US');
         for($j=0; $j<=5; $j++){
             for($k=1; $k<=8; $k++){
                 for ($i = 0; $i < 200; $i++){
-                    $episode = new Episode();
+                    $episode = new Episode();          
                     $episode->setNumber($faker->numberBetween($min=1, $max=22));
                     $episode->setTitle($faker->realText($maxNbChars = 40, $indexSize = 2));
                     $episode->setSynopsis($faker->realText($maxNbChars = 200, $indexSize = 2));
                     $episode->setSeason($this->getReference('prog_'. $j . '_season_'.$k));
+                    $slug = $this->slugify->generate($episode->getTitle());
+                    $episode->setSlug($slug);  
                     
                     $manager->persist($episode);
                 }

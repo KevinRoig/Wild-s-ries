@@ -10,10 +10,12 @@ use App\Entity\Program;
 use App\Entity\Season;
 use App\Entity\Episode;
 use App\Form\ProgramType;
+use App\Services\Slugify;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Route("/programs", name="program_")
@@ -44,12 +46,14 @@ class ProgramController extends AbstractController
      * @Route("/new", name="new")
      * @return Response 
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Slugify $slugify): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
+            $slug = $slugify->generate($program->getTitle());
+            $program->setSlug($slug);
             $entityManager->persist($program);
             $entityManager->flush();
             return $this->redirectToRoute('program_index');
@@ -62,7 +66,7 @@ class ProgramController extends AbstractController
 
     /**
      * Getting a program by id
-     * @Route("/show/{id}", name="show")
+     * @Route("/{slug}", name="show")
      * @return Response
      */
     public function show(Program $program): Response
@@ -74,7 +78,7 @@ class ProgramController extends AbstractController
 
     /**
      * Show season of a program
-     * @Route("/{program}/season/{season}", name="season_show")
+     * @Route("/{slug}/season/{season}", name="season_show")
      */
     public function showSeason(Program $program, Season $season): Response
     {
@@ -86,7 +90,9 @@ class ProgramController extends AbstractController
 
     /**
      * Show episode 
-     * @Route("/{program}/season/{season}/episode/{episode}", name="episode_show")
+     * @Route("/{programSlug}/season/{season}/episode/{episodeSlug}", name="episode_show")
+     * @ParamConverter("program", options={"mapping": {"programSlug": "slug"}})
+     * @ParamConverter("episode", options={"mapping": {"episodeSlug": "slug"}})
      */
     public function showEpisode(Program $program, Season $season, Episode $episode): Response
     {

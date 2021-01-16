@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\ObjectType;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Faker;
+use App\Services\Slugify;
 
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -63,13 +64,22 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 
 ];
 
-public function load(ObjectManager $manager)
+private $slugify;
+
+public function __construct(Slugify $slugify)
 {
+    $this->slugify = $slugify;
+}
+
+public function load(ObjectManager $manager)
+{   
     $faker = Faker\Factory::create('en_US');
     $i = 0;
     foreach (self::PROGRAMS as $title => $data) {
         $program = new Program();
         $program->setTitle($title);
+        $slug = $this->slugify->generate($program->getTitle());
+        $program->setSlug($slug);
         $program->setSummary($data['summary']);
         $program->setCategory($this->getReference('category_' .$faker->numberBetween($min=0, $max=5)));
         $program->setPoster($faker->imageUrl($width = 640, $height = 480));
