@@ -24,3 +24,6 @@ https://drive.google.com/file/d/1p-9HpAPMIAKSCmw70EJIUkGarifffNPD/view
 
 Vidéo de la réponse de la quête 17:
 https://drive.google.com/file/d/1iMCBftkRYNOlUWeVXQCLVFaRff6wJbGg/view
+
+Vidéo de la réponse de la quête 18:
+https://drive.google.com/file/d/1yaHcRHUyqUNZRarTUiECpjk64l-TZeQx/view

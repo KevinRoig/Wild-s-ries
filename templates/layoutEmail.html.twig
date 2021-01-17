@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="icon" href="{{ asset('build/favicon.ico') }}" />
+    </head>
+    <body class="body">
+        {% block header %}
+            {% include "_navbar.html.twig" %}
+        {% endblock %}
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>
