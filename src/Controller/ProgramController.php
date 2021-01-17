@@ -18,7 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-
+use App\Form\CommentType;
+use App\Entity\Comment;
+use App\Repository\CommentRepository;
 
 /**
  * @Route("/programs", name="program_")
@@ -105,12 +107,31 @@ class ProgramController extends AbstractController
      * @ParamConverter("program", options={"mapping": {"programSlug": "slug"}})
      * @ParamConverter("episode", options={"mapping": {"episodeSlug": "slug"}})
      */
-    public function showEpisode(Program $program, Season $season, Episode $episode): Response
+    public function showEpisode(Request $request, Program $program, Season $season, Episode $episode, CommentRepository $commentRepository): Response
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $user = $this->getUser();
+            $comment->setAuthor($user);
+            $comment->setEpisode($episode);
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('program_index');
+        }
+
+        $comments = $commentRepository->findBy(['episode' => $episode]);
         return $this->render('program/episode_show.html.twig', [
             'program' => $program,
             'season' => $season,
             'episode' => $episode,
+            'comments' => $comments,
+            'form' => $form->createView(),
         ]);
     }
 

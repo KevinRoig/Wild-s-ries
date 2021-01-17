@@ -22,3 +22,7 @@ $theme-colors: (
 h1 {
     color: $danger;
 }
+
+.login:link, .login:visited, .login:hover, .login:active, .logout:link, .logout:visited, .logout:hover, .logout:active{
+    color: black;
+}
